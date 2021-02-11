@@ -20,7 +20,7 @@
     <fragment
         android:id="@+id/addNewFragment2"
         android:name="com.pmprogramms.shoppinglist.fragments.AddNewShopListFragment"
-        android:label="fragment_add_new"
+        android:label="Add new shop list"
         tools:layout="@layout/fragment_add_new" >
         <action
             android:id="@+id/action_addNewFragment2_to_mainFragment"
@@ -29,8 +29,7 @@
     <fragment
         android:id="@+id/shopListDetailsFragment"
         android:name="com.pmprogramms.shoppinglist.fragments.ShopListDetailsFragment"
-        android:label="fragment_shop_list_details"
-        tools:layout="@layout/fragment_shop_list_details" >
+        tools:layout="@layout/fragment_shop_list_details">
         <action
             android:id="@+id/action_shopListDetailsFragment_to_mainFragment"
             app:destination="@id/mainFragment" />

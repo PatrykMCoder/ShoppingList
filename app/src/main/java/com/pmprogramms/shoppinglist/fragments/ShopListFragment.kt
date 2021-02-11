@@ -18,10 +18,6 @@ import com.pmprogramms.shoppinglist.databinding.FragmentShopListBinding
 class ShopListFragment : Fragment() {
     private lateinit var viewModel: ShopListViewModel
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -36,7 +32,7 @@ class ShopListFragment : Fragment() {
         binding.recycler.layoutManager = LinearLayoutManager(requireContext())
 
         viewModel = ViewModelProvider(this).get(ShopListViewModel::class.java)
-        viewModel.readAllData.observe(viewLifecycleOwner, Observer { shopList ->
+        viewModel.readAllUnArchiveData.observe(viewLifecycleOwner, Observer { shopList ->
             adapter.setData(shopList)
         })
 

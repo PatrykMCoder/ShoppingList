@@ -31,7 +31,7 @@
                 android:layout_height="wrap_content"
                 android:layout_toEndOf="@id/image"
                 android:text="@string/example_text"
-                android:textColor="#99ff14"
+                android:textColor="@color/light_green"
                 android:textSize="36sp"
                 android:textStyle="bold"
                 android:layout_marginTop="10dp"/>
@@ -43,11 +43,11 @@
                 android:layout_below="@+id/text_item_name"
                 android:layout_toEndOf="@id/image"
                 android:text="@string/groceries_done_18_36"
-                android:textColor="#99ff14"
+                android:textColor="@color/light_green"
                 android:textSize="18sp" />
 
             <CheckBox
-                android:id="@+id/checked"
+                android:id="@+id/item_checked"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"

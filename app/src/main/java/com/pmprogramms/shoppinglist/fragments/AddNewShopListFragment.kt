@@ -3,6 +3,7 @@ package com.pmprogramms.shoppinglist.fragments
 import android.graphics.Color
 import android.os.Bundle
 import android.text.InputType
+import android.util.DisplayMetrics
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,8 @@ import android.widget.EditText
 import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import com.pmprogramms.shoppinglist.R
 import com.pmprogramms.shoppinglist.data.ShopList
 import com.pmprogramms.shoppinglist.data.json.Item
 import com.pmprogramms.shoppinglist.databinding.FragmentAddNewBinding
@@ -57,23 +60,22 @@ class AddNewShopListFragment : Fragment() {
         val shopList = ShopList(0, title, false, jsonString, now)
         viewModel.addShopList(shopList)
 
-        parentFragmentManager.popBackStack() // after saving fragment call back to HomeFragment
+        findNavController().navigate(R.id.action_addNewFragment2_to_mainFragment);
     }
 
     private fun collectDataFromUI() {
         var tmp = 0
         while (tmp != createdElement) {
             val newShopItem: EditText = box.findViewWithTag("t_$tmp")
-            val itemCount = 0
+            val newShopItemCount: EditText = box.findViewWithTag("c_$tmp")
+            val itemCount = newShopItemCount.text.toString()
             val itemCollect = false
-            val item = Item(newShopItem.text.toString(), itemCount, itemCollect)
+            val item = Item(newShopItem.text.toString(), itemCount.toInt(), itemCollect)
             list.add(item)
             tmp++
         }
-
     }
 
-    //todo create edittext for inset counts element of one item
     private fun createElements() {
         val linearLayout = LinearLayout(context)
         linearLayout.layoutParams =
@@ -83,6 +85,8 @@ class AddNewShopListFragment : Fragment() {
             )
         linearLayout.orientation = LinearLayout.HORIZONTAL
         val newShopItem = EditText(context)
+        val shopItemCount = EditText(context)
+
         newShopItem.hint = "Enter item"
         newShopItem.setBackgroundColor(Color.TRANSPARENT)
         newShopItem.textSize = 20F
@@ -90,6 +94,10 @@ class AddNewShopListFragment : Fragment() {
         newShopItem.inputType = InputType.TYPE_CLASS_TEXT
         newShopItem.setTextColor(Color.BLACK)
         newShopItem.requestFocus()
+        newShopItem.layoutParams = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT, 0.5f
+        )
         newShopItem.setOnKeyListener { _, keyCode, _ ->
             if (keyCode == KeyEvent.KEYCODE_ENTER) {
                 createElements()
@@ -99,7 +107,31 @@ class AddNewShopListFragment : Fragment() {
         }
 
         newShopItem.tag = "t_$createdElement"
+
+        shopItemCount.hint = "Enter item"
+        shopItemCount.setBackgroundColor(Color.TRANSPARENT)
+        shopItemCount.textSize = 20F
+        shopItemCount.maxLines = 1
+        shopItemCount.inputType = InputType.TYPE_CLASS_NUMBER
+        shopItemCount.setTextColor(Color.BLACK)
+        shopItemCount.requestFocus()
+        shopItemCount.setPadding(10, 0, 0, 0)
+        shopItemCount.layoutParams = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT, 0.5f
+        )
+        shopItemCount.setOnKeyListener { _, keyCode, _ ->
+            if (keyCode == KeyEvent.KEYCODE_ENTER) {
+                createElements()
+                return@setOnKeyListener true
+            }
+            false
+        }
+
+        shopItemCount.tag = "c_$createdElement"
+
         linearLayout.addView(newShopItem)
+        linearLayout.addView(shopItemCount)
         box.addView(linearLayout)
         createdElement++
     }

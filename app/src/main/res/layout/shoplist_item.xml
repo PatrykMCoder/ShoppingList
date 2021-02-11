@@ -31,7 +31,7 @@
                 android:textSize="36sp"
                 android:text="@string/example_text"
                 android:textStyle="bold"
-                android:textColor="#99ff14"
+                android:textColor="@color/light_green"
                 android:layout_toEndOf="@id/image"/>
 
             <TextView
@@ -40,7 +40,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="18sp"
                 android:text="@string/groceries_done_18_36"
-                android:textColor="#99ff14"
+                android:textColor="@color/light_green"
                 android:layout_below="@+id/text_title"
                 android:layout_toEndOf="@id/image"/>
 

@@ -6,15 +6,35 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.pmprogramms.shoppinglist.R
+import com.pmprogramms.shoppinglist.databinding.FragmentArchiveShopListBinding
+import com.pmprogramms.shoppinglist.util.ListArchiveAdapter
+import com.pmprogramms.shoppinglist.viewmodel.ShopListViewModel
+
 class ArchiveShopListFragment : Fragment() {
+    private lateinit var viewModel: ShopListViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        Toast.makeText(context, "pa", Toast.LENGTH_LONG).show()
-        return inflater.inflate(R.layout.fragment_archive_shop_list, container, false)
+    ): View {
+        val binding = FragmentArchiveShopListBinding.inflate(layoutInflater)
+
+        viewModel = ViewModelProvider(this).get(ShopListViewModel::class.java)
+
+        val adapter = ListArchiveAdapter()
+
+        binding.recycler.adapter = adapter
+        binding.recycler.layoutManager = LinearLayoutManager(requireContext())
+
+        viewModel.readAllArchiveData.observe(viewLifecycleOwner, Observer { shopList ->
+            adapter.setData(shopList)
+        })
+
+        return binding.root
     }
 }

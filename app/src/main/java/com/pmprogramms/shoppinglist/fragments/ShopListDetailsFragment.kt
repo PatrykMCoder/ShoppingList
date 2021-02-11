@@ -4,12 +4,16 @@ import android.app.AlertDialog
 import android.content.DialogInterface
 import android.os.Bundle
 import android.view.*
+import android.widget.EditText
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.pmprogramms.shoppinglist.R
+import com.pmprogramms.shoppinglist.data.json.Item
 import com.pmprogramms.shoppinglist.viewmodel.ShopListViewModel
 import com.pmprogramms.shoppinglist.databinding.FragmentShopListDetailsBinding
 import com.pmprogramms.shoppinglist.util.JSONUtil
@@ -19,6 +23,7 @@ class ShopListDetailsFragment : Fragment() {
     lateinit var binding: FragmentShopListDetailsBinding
     private val args by navArgs<ShopListDetailsFragmentArgs>()
     private lateinit var viewModel: ShopListViewModel
+    private lateinit var adapter: ListDetailsAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,11 +32,15 @@ class ShopListDetailsFragment : Fragment() {
         binding = FragmentShopListDetailsBinding.inflate(layoutInflater)
         binding.title.text = args.shoplist.title
 
-        val adapter = ListDetailsAdapter()
+        binding.add.setOnClickListener {
+            addShopListElement()
+        }
+
+        adapter = ListDetailsAdapter()
         val items = JSONUtil().readFromJSON(args.shoplist.items)
         binding.recyclerDetails.adapter = adapter
         binding.recyclerDetails.layoutManager = LinearLayoutManager(requireContext())
-        adapter.setData(items)
+        adapter.setData(items, args.shoplist.id)
 
         viewModel = ViewModelProvider(this).get(ShopListViewModel::class.java)
 
@@ -69,6 +78,44 @@ class ShopListDetailsFragment : Fragment() {
 
         builder.setTitle("Delete")
         builder.setMessage("Do you want delete ${args.shoplist.title}")
+        builder.create().show()
+    }
+
+    private fun addShopListElement() {
+        val builder = AlertDialog.Builder(requireContext())
+        val view =
+            LayoutInflater.from(requireContext()).inflate(R.layout.add_item_layout, null, false)
+        builder.setView(view)
+        builder.setTitle("Add element")
+
+        val itemName = view.findViewById<EditText>(R.id.text_item_name)
+        itemName.layoutParams = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT, 0.5f
+        )
+
+        val itemCount = view.findViewById<EditText>(R.id.text_item_count)
+        itemCount.layoutParams = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT, 0.5f
+        )
+
+        builder.setPositiveButton("Add") { dialogInterface: DialogInterface, _ ->
+            val item = Item(itemName.text.toString(), itemCount.text.toString().toInt(), false)
+            var listJson = args.shoplist.items
+            val listItems = JSONUtil().readFromJSON(listJson)
+            val mutableListItems = listItems.toMutableList()
+            mutableListItems.add(item)
+            listJson = JSONUtil().generateJSONString(mutableListItems)
+
+            //todo update view after added items - still not working ;c
+            viewModel.updateShopList(args.shoplist.id, listJson)
+            adapter.notifyDataSetChanged()
+        }
+
+        builder.setNegativeButton("Cancel") { dialogInterface: DialogInterface, _ ->
+            dialogInterface.cancel()
+        }
         builder.create().show()
     }
 }
