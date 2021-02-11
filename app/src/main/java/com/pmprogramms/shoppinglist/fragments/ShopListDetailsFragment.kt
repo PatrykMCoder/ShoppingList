@@ -21,7 +21,7 @@ import com.pmprogramms.shoppinglist.adapters.ListDetailsAdapter
 import com.pmprogramms.shoppinglist.util.text.TextHelper
 
 class ShopListDetailsFragment : Fragment() {
-    lateinit var binding: FragmentShopListDetailsBinding
+    private lateinit var binding: FragmentShopListDetailsBinding
     private val args by navArgs<ShopListDetailsFragmentArgs>()
     private lateinit var viewModel: ShopListViewModel
     private lateinit var adapter: ListDetailsAdapter

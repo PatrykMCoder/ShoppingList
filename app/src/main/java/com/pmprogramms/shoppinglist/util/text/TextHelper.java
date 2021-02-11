@@ -1,7 +1,5 @@
 package com.pmprogramms.shoppinglist.util.text;
 
-import org.jetbrains.annotations.NotNull;
-
 public class TextHelper {
     public boolean checkInputs(String item, String count) {
         return item != null && count != null &&

@@ -20,8 +20,8 @@ class ListArchiveAdapter : RecyclerView.Adapter<ListArchiveAdapter.ListHolder>()
     private lateinit var viewModel: ShopListViewModel
 
     class ListHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val name = itemView.findViewById<TextView>(R.id.text_title)
-        val countCollected = itemView.findViewById<TextView>(R.id.text_checked_elements)
+        val name: TextView = itemView.findViewById(R.id.text_title)
+        val countCollected: TextView = itemView.findViewById(R.id.text_checked_elements)
         var rowItem: ConstraintLayout = itemView.findViewById(R.id.row_item)
     }
 

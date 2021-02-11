@@ -1,17 +1,13 @@
 package com.pmprogramms.shoppinglist.util.json;
 
-import android.util.Log;
-
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.pmprogramms.shoppinglist.data.json.Item;
 import com.pmprogramms.shoppinglist.data.json.ItemJSON;
 
-import java.lang.reflect.Type;
 import java.util.List;
 
 public class JSONUtil {
-    private static final String TAG = "JSONUTIL";
 
     public List<Item> readFromJSON(String jsonString) {
         Gson gson = new Gson();

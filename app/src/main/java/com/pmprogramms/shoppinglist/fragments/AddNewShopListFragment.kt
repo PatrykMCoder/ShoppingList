@@ -45,7 +45,7 @@ class AddNewShopListFragment : Fragment() {
         }
 
         binding.save.setOnClickListener {
-            insetDataToDB();
+            insetDataToDB()
         }
 
         createElements() // here is create first element
@@ -61,7 +61,7 @@ class AddNewShopListFragment : Fragment() {
             val shopList = ShopList(0, title, false, jsonString, now)
             viewModel.addShopList(shopList)
 
-            findNavController().navigate(R.id.action_addNewFragment2_to_mainFragment);
+            findNavController().navigate(R.id.action_addNewFragment2_to_mainFragment)
         } else {
             Toast.makeText(context, "Please insert title", Toast.LENGTH_LONG).show()
         }

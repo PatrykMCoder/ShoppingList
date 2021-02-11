@@ -1,15 +1,12 @@
 package com.pmprogramms.shoppinglist.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.get
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
-import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.setupWithNavController
 import com.pmprogramms.shoppinglist.R
 import com.pmprogramms.shoppinglist.databinding.FragmentMainBinding
 

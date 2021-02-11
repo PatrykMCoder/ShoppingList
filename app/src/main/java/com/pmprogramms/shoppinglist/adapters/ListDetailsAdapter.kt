@@ -21,10 +21,10 @@ class ListDetailsAdapter : RecyclerView.Adapter<ListDetailsAdapter.ListDetailsHo
     private lateinit var viewModel: ShopListViewModel
 
     class ListDetailsHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val name = itemView.findViewById<TextView>(R.id.text_item_name)
-        val count = itemView.findViewById<TextView>(R.id.text_item_count)
-        val checked = itemView.findViewById<CheckBox>(R.id.item_checked)
-        var container = itemView.findViewById<ConstraintLayout>(R.id.row_item)
+        val name: TextView = itemView.findViewById(R.id.text_item_name)
+        val count: TextView = itemView.findViewById(R.id.text_item_count)
+        val checked: CheckBox = itemView.findViewById(R.id.item_checked)
+        var container: ConstraintLayout = itemView.findViewById(R.id.row_item)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListDetailsHolder {
