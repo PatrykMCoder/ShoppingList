@@ -1,4 +1,4 @@
-package com.pmprogramms.shoppinglist.util;
+package com.pmprogramms.shoppinglist.util.json;
 
 import android.util.Log;
 

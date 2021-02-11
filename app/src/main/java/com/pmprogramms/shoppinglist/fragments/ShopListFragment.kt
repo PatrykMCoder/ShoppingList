@@ -1,6 +1,5 @@
 package com.pmprogramms.shoppinglist.fragments
 
-import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,7 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.pmprogramms.shoppinglist.util.ListAdapter
+import com.pmprogramms.shoppinglist.adapters.ListAdapter
 import com.pmprogramms.shoppinglist.R
 import com.pmprogramms.shoppinglist.viewmodel.ShopListViewModel
 import com.pmprogramms.shoppinglist.databinding.FragmentShopListBinding

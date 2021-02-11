@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.get
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.navigation.fragment.findNavController
@@ -27,6 +28,9 @@ class MainFragment : Fragment() {
 
         pager.adapter = adapter
 
+        tabLayout.getTabAt(0)?.setIcon(R.drawable.ic_baseline_list_24)
+        tabLayout.getTabAt(1)?.setIcon(R.drawable.ic_baseline_archive_24)
+
         return binding.root
     }
 
@@ -43,7 +47,7 @@ class MainFragment : Fragment() {
             }
         }
 
-        override fun getPageTitle(position: Int): CharSequence? {
+        override fun getPageTitle(position: Int): CharSequence {
             return when (position) {
                 0 -> "ShopList"
                 1 -> "ArchiveShopList"

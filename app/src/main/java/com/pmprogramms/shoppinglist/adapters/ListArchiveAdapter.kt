@@ -1,4 +1,4 @@
-package com.pmprogramms.shoppinglist.util
+package com.pmprogramms.shoppinglist.adapters
 
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +11,8 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.RecyclerView
 import com.pmprogramms.shoppinglist.R
 import com.pmprogramms.shoppinglist.data.ShopList
+import com.pmprogramms.shoppinglist.data.json.Item
+import com.pmprogramms.shoppinglist.util.json.JSONUtil
 import com.pmprogramms.shoppinglist.viewmodel.ShopListViewModel
 
 class ListArchiveAdapter : RecyclerView.Adapter<ListArchiveAdapter.ListHolder>() {
@@ -19,6 +21,7 @@ class ListArchiveAdapter : RecyclerView.Adapter<ListArchiveAdapter.ListHolder>()
 
     class ListHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val name = itemView.findViewById<TextView>(R.id.text_title)
+        val countCollected = itemView.findViewById<TextView>(R.id.text_checked_elements)
         var rowItem: ConstraintLayout = itemView.findViewById(R.id.row_item)
     }
 
@@ -32,6 +35,7 @@ class ListArchiveAdapter : RecyclerView.Adapter<ListArchiveAdapter.ListHolder>()
     override fun onBindViewHolder(holder: ListHolder, position: Int) {
         val currentItem = shopListItems[position]
         holder.name.text = currentItem.title
+        holder.countCollected.text = "Groceries done ${calculateGroceries(currentItem.items)}"
         holder.rowItem.setOnLongClickListener(View.OnLongClickListener { v ->
             viewModel.unArchiveAction(currentItem.id)
             return@OnLongClickListener true
@@ -48,5 +52,18 @@ class ListArchiveAdapter : RecyclerView.Adapter<ListArchiveAdapter.ListHolder>()
     fun setData(shopListItems: List<ShopList>) {
         this.shopListItems = shopListItems
         notifyDataSetChanged()
+    }
+
+    private fun calculateGroceries(item: String): String {
+        val items = JSONUtil().readFromJSON(item)
+        val allSize = items.size
+        val doneList = emptyList<Item>().toMutableList()
+        for (i in items) {
+            if (i.item_collect)
+                doneList.add(i)
+        }
+        val doneSize = doneList.size
+
+        return "$doneSize/$allSize"
     }
 }

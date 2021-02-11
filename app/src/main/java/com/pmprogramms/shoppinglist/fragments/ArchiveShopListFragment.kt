@@ -5,14 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.pmprogramms.shoppinglist.R
 import com.pmprogramms.shoppinglist.databinding.FragmentArchiveShopListBinding
-import com.pmprogramms.shoppinglist.util.ListArchiveAdapter
+import com.pmprogramms.shoppinglist.adapters.ListArchiveAdapter
 import com.pmprogramms.shoppinglist.viewmodel.ShopListViewModel
 
 class ArchiveShopListFragment : Fragment() {

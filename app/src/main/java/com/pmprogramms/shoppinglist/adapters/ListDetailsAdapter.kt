@@ -1,5 +1,6 @@
-package com.pmprogramms.shoppinglist.util
+package com.pmprogramms.shoppinglist.adapters
 
+import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.RecyclerView
 import com.pmprogramms.shoppinglist.R
 import com.pmprogramms.shoppinglist.data.json.Item
+import com.pmprogramms.shoppinglist.util.json.JSONUtil
 import com.pmprogramms.shoppinglist.viewmodel.ShopListViewModel
 
 class ListDetailsAdapter : RecyclerView.Adapter<ListDetailsAdapter.ListDetailsHolder>() {
@@ -37,14 +39,19 @@ class ListDetailsAdapter : RecyclerView.Adapter<ListDetailsAdapter.ListDetailsHo
 
     override fun onBindViewHolder(holder: ListDetailsHolder, position: Int) {
         val current = shopListItems[position]
+
+        updateUI(current.item_collect, holder)
+
         holder.name.text = current.item_name
         holder.count.text = "x${current.item_count}"
         holder.checked.isChecked = current.item_collect
 
         holder.checked.setOnCheckedChangeListener { buttonView, isChecked ->
             run {
+                updateUI(isChecked, holder)
                 current.item_collect = isChecked
-                val jsonString = JSONUtil().generateJSONString(shopListItems)
+                val jsonString = JSONUtil()
+                    .generateJSONString(shopListItems)
                 viewModel.updateShopList(id, jsonString)
             }
         }
@@ -68,5 +75,15 @@ class ListDetailsAdapter : RecyclerView.Adapter<ListDetailsAdapter.ListDetailsHo
         this.shopListItems = shopListItems
         this.id = id
         notifyDataSetChanged()
+    }
+
+    private fun updateUI(collected: Boolean, holder: ListDetailsHolder) {
+        if (collected) {
+            holder.name.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
+            holder.count.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
+        } else {
+            holder.name.paintFlags = 0
+            holder.count.paintFlags = 0
+        }
     }
 }

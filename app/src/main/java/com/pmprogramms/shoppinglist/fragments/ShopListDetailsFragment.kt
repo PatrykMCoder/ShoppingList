@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.view.*
 import android.widget.EditText
 import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -16,8 +16,9 @@ import com.pmprogramms.shoppinglist.R
 import com.pmprogramms.shoppinglist.data.json.Item
 import com.pmprogramms.shoppinglist.viewmodel.ShopListViewModel
 import com.pmprogramms.shoppinglist.databinding.FragmentShopListDetailsBinding
-import com.pmprogramms.shoppinglist.util.JSONUtil
-import com.pmprogramms.shoppinglist.util.ListDetailsAdapter
+import com.pmprogramms.shoppinglist.util.json.JSONUtil
+import com.pmprogramms.shoppinglist.adapters.ListDetailsAdapter
+import com.pmprogramms.shoppinglist.util.text.TextHelper
 
 class ShopListDetailsFragment : Fragment() {
     lateinit var binding: FragmentShopListDetailsBinding
@@ -30,8 +31,6 @@ class ShopListDetailsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentShopListDetailsBinding.inflate(layoutInflater)
-        binding.title.text = args.shoplist.title
-
         binding.add.setOnClickListener {
             addShopListElement()
         }
@@ -101,16 +100,23 @@ class ShopListDetailsFragment : Fragment() {
         )
 
         builder.setPositiveButton("Add") { dialogInterface: DialogInterface, _ ->
-            val item = Item(itemName.text.toString(), itemCount.text.toString().toInt(), false)
-            var listJson = args.shoplist.items
-            val listItems = JSONUtil().readFromJSON(listJson)
-            val mutableListItems = listItems.toMutableList()
-            mutableListItems.add(item)
-            listJson = JSONUtil().generateJSONString(mutableListItems)
+            if (TextHelper().checkInputs(itemName.text.toString(), itemCount.text.toString())) {
+                val item = Item(itemName.text.toString(), itemCount.text.toString().toInt(), false)
+                var listJson = args.shoplist.items
+                val listItems = JSONUtil().readFromJSON(listJson)
+                val mutableListItems = listItems.toMutableList()
+                mutableListItems.add(item)
+                listJson = JSONUtil().generateJSONString(mutableListItems)
 
-            //todo update view after added items - still not working ;c
-            viewModel.updateShopList(args.shoplist.id, listJson)
-            adapter.notifyDataSetChanged()
+                //todo update view after added items - still not working ;c
+                viewModel.updateShopList(args.shoplist.id, listJson)
+                adapter.notifyDataSetChanged()
+            } else
+                Toast.makeText(
+                    context,
+                    "Can't add empty data. Please fill all inputs",
+                    Toast.LENGTH_LONG
+                ).show()
         }
 
         builder.setNegativeButton("Cancel") { dialogInterface: DialogInterface, _ ->

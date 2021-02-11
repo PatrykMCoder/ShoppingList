@@ -3,13 +3,13 @@ package com.pmprogramms.shoppinglist.fragments
 import android.graphics.Color
 import android.os.Bundle
 import android.text.InputType
-import android.util.DisplayMetrics
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -17,7 +17,8 @@ import com.pmprogramms.shoppinglist.R
 import com.pmprogramms.shoppinglist.data.ShopList
 import com.pmprogramms.shoppinglist.data.json.Item
 import com.pmprogramms.shoppinglist.databinding.FragmentAddNewBinding
-import com.pmprogramms.shoppinglist.util.JSONUtil
+import com.pmprogramms.shoppinglist.util.json.JSONUtil
+import com.pmprogramms.shoppinglist.util.text.TextHelper
 import com.pmprogramms.shoppinglist.viewmodel.ShopListViewModel
 import java.util.*
 import kotlin.collections.ArrayList
@@ -52,26 +53,33 @@ class AddNewShopListFragment : Fragment() {
     }
 
     private fun insetDataToDB() {
-        collectDataFromUI()
         val title = binding.textTitle.text.toString()
+        if (TextHelper().checkTitle(title)) {
+            collectDataFromUI()
+            val now = Calendar.getInstance().timeInMillis
+            val jsonString = JSONUtil().generateJSONString(list)
+            val shopList = ShopList(0, title, false, jsonString, now)
+            viewModel.addShopList(shopList)
 
-        val now = Calendar.getInstance().timeInMillis
-        val jsonString = JSONUtil().generateJSONString(list)
-        val shopList = ShopList(0, title, false, jsonString, now)
-        viewModel.addShopList(shopList)
-
-        findNavController().navigate(R.id.action_addNewFragment2_to_mainFragment);
+            findNavController().navigate(R.id.action_addNewFragment2_to_mainFragment);
+        } else {
+            Toast.makeText(context, "Please insert title", Toast.LENGTH_LONG).show()
+        }
     }
+
 
     private fun collectDataFromUI() {
         var tmp = 0
         while (tmp != createdElement) {
             val newShopItem: EditText = box.findViewWithTag("t_$tmp")
             val newShopItemCount: EditText = box.findViewWithTag("c_$tmp")
+            val shopItemName = newShopItem.text.toString()
             val itemCount = newShopItemCount.text.toString()
             val itemCollect = false
-            val item = Item(newShopItem.text.toString(), itemCount.toInt(), itemCollect)
-            list.add(item)
+            if (TextHelper().checkInputs(shopItemName, itemCount)) {
+                val item = Item(newShopItem.text.toString(), itemCount.toInt(), itemCollect)
+                list.add(item)
+            }
             tmp++
         }
     }
@@ -108,7 +116,7 @@ class AddNewShopListFragment : Fragment() {
 
         newShopItem.tag = "t_$createdElement"
 
-        shopItemCount.hint = "Enter item"
+        shopItemCount.hint = "Enter count item"
         shopItemCount.setBackgroundColor(Color.TRANSPARENT)
         shopItemCount.textSize = 20F
         shopItemCount.maxLines = 1

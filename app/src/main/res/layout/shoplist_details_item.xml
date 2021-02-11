@@ -8,6 +8,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/design_default_color_background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -29,12 +30,12 @@
                 android:id="@+id/text_item_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:layout_toEndOf="@id/image"
                 android:text="@string/example_text"
-                android:textColor="@color/light_green"
+                android:textColor="@color/green"
                 android:textSize="36sp"
-                android:textStyle="bold"
-                android:layout_marginTop="10dp"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/text_item_count"
@@ -43,16 +44,16 @@
                 android:layout_below="@+id/text_item_name"
                 android:layout_toEndOf="@id/image"
                 android:text="@string/groceries_done_18_36"
-                android:textColor="@color/light_green"
+                android:textColor="@color/green"
                 android:textSize="18sp" />
 
             <CheckBox
                 android:id="@+id/item_checked"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
                 android:layout_alignParentEnd="true"
-                android:layout_margin="25dp"/>
+                android:layout_centerVertical="true"
+                android:layout_margin="25dp" />
 
         </RelativeLayout>
 

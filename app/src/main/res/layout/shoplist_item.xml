@@ -10,9 +10,10 @@
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:cardBackgroundColor="@color/design_default_color_background">
 
-        <RelativeLayout
+    <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -31,7 +32,7 @@
                 android:textSize="36sp"
                 android:text="@string/example_text"
                 android:textStyle="bold"
-                android:textColor="@color/light_green"
+                android:textColor="@color/green"
                 android:layout_toEndOf="@id/image"/>
 
             <TextView
@@ -40,7 +41,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="18sp"
                 android:text="@string/groceries_done_18_36"
-                android:textColor="@color/light_green"
+                android:textColor="@color/green"
                 android:layout_below="@+id/text_title"
                 android:layout_toEndOf="@id/image"/>
 
