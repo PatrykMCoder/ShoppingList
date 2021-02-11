@@ -1,13 +1,13 @@
-package com.pmprogramms.shoppinglist
+package com.pmprogramms.shoppinglist.util
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.pmprogramms.shoppinglist.R
 import com.pmprogramms.shoppinglist.data.ShopList
 import com.pmprogramms.shoppinglist.fragments.MainFragmentDirections
 
@@ -41,6 +41,5 @@ class ListAdapter : RecyclerView.Adapter<ListAdapter.ListHolder>() {
         this.shopList = shopList
         notifyDataSetChanged()
     }
-
 }
 

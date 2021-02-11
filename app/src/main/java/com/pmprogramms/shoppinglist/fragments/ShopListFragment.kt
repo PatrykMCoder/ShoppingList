@@ -10,19 +10,16 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.pmprogramms.shoppinglist.ListAdapter
-import com.pmprogramms.shoppinglist.MainActivity
+import com.pmprogramms.shoppinglist.util.ListAdapter
 import com.pmprogramms.shoppinglist.R
 import com.pmprogramms.shoppinglist.viewmodel.ShopListViewModel
 import com.pmprogramms.shoppinglist.databinding.FragmentShopListBinding
 
 class ShopListFragment : Fragment() {
-    private lateinit var mainActivity: MainActivity
     private lateinit var viewModel: ShopListViewModel
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        mainActivity = context as MainActivity
     }
 
     override fun onCreateView(

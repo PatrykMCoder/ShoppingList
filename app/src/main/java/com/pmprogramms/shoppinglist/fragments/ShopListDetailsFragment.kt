@@ -8,20 +8,30 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.pmprogramms.shoppinglist.R
 import com.pmprogramms.shoppinglist.viewmodel.ShopListViewModel
 import com.pmprogramms.shoppinglist.databinding.FragmentShopListDetailsBinding
+import com.pmprogramms.shoppinglist.util.JSONUtil
+import com.pmprogramms.shoppinglist.util.ListDetailsAdapter
 
 class ShopListDetailsFragment : Fragment() {
     lateinit var binding: FragmentShopListDetailsBinding
     private val args by navArgs<ShopListDetailsFragmentArgs>()
     private lateinit var viewModel: ShopListViewModel
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentShopListDetailsBinding.inflate(layoutInflater)
         binding.title.text = args.shoplist.title
+
+        val adapter = ListDetailsAdapter()
+        val items = JSONUtil().readFromJSON(args.shoplist.items)
+        binding.recyclerDetails.adapter = adapter
+        binding.recyclerDetails.layoutManager = LinearLayoutManager(requireContext())
+        adapter.setData(items)
 
         viewModel = ViewModelProvider(this).get(ShopListViewModel::class.java)
 
@@ -35,7 +45,7 @@ class ShopListDetailsFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId) {
+        when (item.itemId) {
             R.id.delete_action -> {
                 deleteShopList()
                 return true
@@ -50,7 +60,7 @@ class ShopListDetailsFragment : Fragment() {
 
         builder.setPositiveButton("Yes") { _: DialogInterface, _: Int ->
             viewModel.deleteSingleList(args.shoplist)
-            findNavController().navigate(R.id.action_shopListDetailsFragment_to_mainFragment    )
+            findNavController().navigate(R.id.action_shopListDetailsFragment_to_mainFragment)
         }
 
         builder.setNegativeButton("No") { dialogInterface: DialogInterface, _ ->
