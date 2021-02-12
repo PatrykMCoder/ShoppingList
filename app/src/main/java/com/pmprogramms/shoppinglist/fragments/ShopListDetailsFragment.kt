@@ -108,7 +108,9 @@ class ShopListDetailsFragment : Fragment() {
                 mutableListItems.add(item)
                 listJson = JSONUtil().generateJSONString(mutableListItems)
 
-                //todo update view after added items - still not working ;c
+                //todo update view after added items - still not working ;c - problem is a 105 line
+                // data is read from args. After every action this args are not updated
+
                 viewModel.updateShopList(args.shoplist.id, listJson)
                 adapter.notifyDataSetChanged()
             } else
